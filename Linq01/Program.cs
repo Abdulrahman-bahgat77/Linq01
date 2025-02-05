@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text.RegularExpressions;
-
+using static Linq01.ListGenerator;
 namespace Linq01
 {
     internal class Program
@@ -104,7 +105,149 @@ namespace Linq01
             #endregion
             #endregion
 
+            #region Data Setup
+            //Console.WriteLine(ProductList[0]);
+            //Console.WriteLine(CustomerList[0]);
+            #endregion
 
+            #region Get Product out stock
+            //Fluent Syntax
+            // var Result = ProductList.Where(X => X.UnitsInStock >=1&&X.Category=="Meat/Poultry");
+
+            //Query Syntax
+            //Result =from p in ProductList
+            //         where p.UnitsInStock >=1&&p.Category=="Meat/Poultry"
+            //            select p;
+
+            #region Ex02 [Index Where]
+            //var Result = ProductList.Where((P, I) => I < 10 && P.UnitsInStock == 0);
+            //foreach (var Item in Result)
+            //{
+            //    Console.WriteLine(Item);
+            //}
+            #endregion
+
+            //foreach (var X in Result)
+            //{
+            //    Console.WriteLine(X);
+            //}
+            #endregion
+
+            #region Filteration Operation[Select,Select Many]
+            #region Product Name
+            //Fluent Syntax
+            //var Result = ProductList.Select(P => P.ProductName);
+
+            //Query Syntax
+            //var Result=from p in ProductList
+            //           select p.ProductName;
+            #endregion
+
+            #region Customer Name
+            //   var Result = CustomerList.Select(X => X.CustomerName);
+            //var Result=from c in CustomerList
+            //  select c.CustomerName;
+            #endregion
+
+            #region Customer Order
+            //Fluent Syntax
+            //  var Result = CustomerList.SelectMany(X => X.Orders);
+
+            //Query Syntax
+            //var Result=from C in CustomerList
+            //          from O in C.Orders
+            //          select O;
+            #endregion
+
+            #region Product Name and Id
+            //var Result = ProductList.Select(X =>new {productId=X.ProductID , ProductName=X.ProductName });
+            // Result=from p in ProductList
+            //        select new
+            //        {
+            //            productId = p.ProductID,
+            //            ProductName=p.ProductName
+            //        };
+            #endregion
+
+            #region Select Product in stock and apply 10% discount
+            //Fluent Syntax
+
+            //var Result = ProductList.Where(X => X.UnitsInStock > 0)
+            //      .Select(X => new
+            //      {
+            //          id=X.ProductID,
+            //          Name=X.ProductName,
+            //          OldPrice=X.UnitPrice,
+            //          newprice=X.UnitPrice-(X.UnitPrice*.1M),
+            //      });
+
+            //  Query  Syntax
+
+            //var Result=from p in ProductList
+            //           where p.UnitsInStock > 0
+            //           select new
+            //           {
+            //               id=p.ProductID,
+            //               Name=p.ProductName,
+            //               OldPrice=p.UnitPrice,
+            //               newPrice=p.UnitPrice-(p.UnitPrice*.1M),
+            //           };
+            #endregion
+
+            //Index Select Valid only fluent Syntax
+
+            //var Result = ProductList.Where(X => X.UnitsInStock > 0)
+            //    .Select((P, I) =>
+            //    new
+            //    {
+            //        inex=I,
+            //        Name=P.ProductName,
+            //    }
+            //    );
+
+            //foreach (var Product in Result)
+            //{
+            //    Console.WriteLine(Product);
+            //}
+
+
+            #endregion
+
+            #region ordering Operation[Ascending,Descending,Reverse,ThenBy,ThenBy Descending]
+
+            #region Ascending
+            //fluent Syntax
+            //  var Result = ProductList.OrderBy(X => X.UnitPrice);
+
+
+            //Query Syntax
+            //var    Result=from p in ProductList
+            //           orderby p.UnitPrice
+            //           select p;
+            #endregion
+
+            #region Descending
+            //Fluent Syntax
+            // var Result =ProductList.OrderByDescending(X=>X.UnitPrice);
+
+            //Query Syntax
+            //Result = from p in ProductList
+            //        orderby p.UnitPrice descending
+            //        select p;
+            #endregion
+
+            #region ThenBy , Reverse
+            //   var Result = ProductList.OrderBy(X => X.UnitPrice).ThenBy(X => X.UnitsInStock);
+
+            // var Result = ProductList.Where(X => X.UnitsInStock==0).Reverse();
+            #endregion
+            //foreach (var Item in Result)
+            //{
+            //    Console.WriteLine(Item);
+            //}
+            #endregion
+
+         
         }
     }
 }
